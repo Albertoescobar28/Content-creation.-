@@ -24,6 +24,6 @@ business, built around the PBA `/ideate` skill.
 1. Fill in `my-brand/voice.md` (send real captions/scripts) and
    confirm `my-brand/pillars.md`.
 2. Create `my-brand/competitors.md` (see draft shortlist from setup).
-3. Follow `API_SETUP.md` to get a YouTube key and an Apify token
-   (Reddit works with no setup).
+3. Follow `API_SETUP.md` to get a YouTube key, a Reddit script-app
+   credential, and an Apify token.
 4. Run `/ideate`.

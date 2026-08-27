@@ -31,14 +31,12 @@ Free quota is 10,000 units/day. Each channel scan in this skill costs
 roughly 100-150 units, so you can run `/ideate` many times a day
 before hitting the limit.
 
-## 2. Reddit — no key required to start
+## 2. Reddit (free "script" app — needed in practice)
 
-`reddit_scan.py` reads Reddit's public `/top.json` listings, which
-don't require an API app. You can run `/ideate` today with zero Reddit
-setup.
-
-If you start getting rate-limited (Reddit blocking requests), register
-a free "script" app for a more reliable connection:
+`reddit_scan.py` can read Reddit's public `/top.json` listings without
+any credentials, but in testing Reddit 403-blocked that public path
+outright (it aggressively blocks cloud/datacenter IPs regardless of
+User-Agent). So treat this as required, not optional:
 
 1. Log into Reddit, go to https://www.reddit.com/prefs/apps
 2. Click **"create another app..."** at the bottom.

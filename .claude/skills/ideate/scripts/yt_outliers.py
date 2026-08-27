@@ -15,6 +15,8 @@ import sys
 import urllib.parse
 import urllib.request
 
+import _env  # noqa: F401 - loads .env into os.environ as a side effect
+
 API_BASE = "https://www.googleapis.com/youtube/v3"
 OUTLIER_MULTIPLE = 3.0  # a video counts as an outlier at 3x the channel's median views
 MAX_VIDEOS_PER_CHANNEL = 50

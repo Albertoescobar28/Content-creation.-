@@ -17,6 +17,8 @@ import sys
 import urllib.error
 import urllib.request
 
+import _env  # noqa: F401 - loads .env into os.environ as a side effect
+
 ACTOR_ID = "apify~instagram-reel-scraper"
 OUTLIER_MULTIPLE = 3.0
 POSTS_PER_HANDLE = 30

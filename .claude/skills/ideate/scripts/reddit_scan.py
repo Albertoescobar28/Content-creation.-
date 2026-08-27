@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Pull top posts from competitor/audience subreddits.
 
-Uses Reddit's public JSON listing endpoints, so no API app is strictly
-required to get started. If REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET /
-REDDIT_USER_AGENT are set, it authenticates via OAuth instead, which is
-more reliable and less likely to get rate-limited. See ../../../API_SETUP.md.
+Uses OAuth (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET / REDDIT_USER_AGENT)
+when set. Falls back to Reddit's public JSON listing endpoints when
+those aren't set, but in practice Reddit now 403s that public path from
+most cloud/datacenter IPs regardless of User-Agent, so OAuth credentials
+are effectively required. See ../../../API_SETUP.md.
 
 Usage:
   python3 reddit_scan.py "subreddit1,subreddit2" --output /tmp/reddit_posts.json
@@ -15,6 +16,8 @@ import os
 import sys
 import urllib.parse
 import urllib.request
+
+import _env  # noqa: F401 - loads .env into os.environ as a side effect
 
 TOP_N_PER_SUBREDDIT = 15
 TIME_WINDOW = "month"  # hour|day|week|month|year|all
@@ -83,6 +86,15 @@ def main():
     except Exception as e:  # noqa: BLE001
         print(f"WARNING: OAuth token request failed ({e}); falling back to public JSON.", file=sys.stderr)
         token = None
+
+    if not token:
+        print(
+            "WARNING: no REDDIT_CLIENT_ID/REDDIT_CLIENT_SECRET set. Reddit's "
+            "public JSON endpoint frequently 403s without OAuth from server "
+            "IPs. If this run comes back empty, set up a free 'script' app "
+            "per API_SETUP.md and add the credentials to .env.",
+            file=sys.stderr,
+        )
 
     all_posts = []
     errors = []
